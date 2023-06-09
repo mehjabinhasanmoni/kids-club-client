@@ -1,68 +1,49 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
-import { useLocation, useNavigate } from "react-router-dom";
-import { updateProfile } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const Register = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+
   const onSubmit = data => {
-    console.log(data)       
-};
-
-
-  const { createUser } = useContext(AuthContext);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  // Location Hooks
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Generating Url
-  const from = location.state?.from?.pathname || "/";
-
-  const handleRegister = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const photo = form.photo.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const confirmPassword = form.cPassword.value;
-    console.log(name, photo, email, password, confirmPassword);
+    console.log(data);
 
     // Create User and update user name & photo
-    createUser(email, password)
-      .then((result) => {
+
+    createUser(data.email, data.password)
+    .then((result) => {
         const user = result.user;
         console.log(user);
-        setError("");
-        event.target.reset();
-        setSuccess("User has created successfully");
 
-        updateProfileUser(result.user, name, photo);
-      })
-      .catch((error) => {
+        updateUserProfile(data.name, data.photo)
+        .then(() => {
+            console.log('User Profile Updated');
+            reset();
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Registration SuccessFully Done',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              navigate('/');
+        })  
+        .catch((error) => {
         console.log(error.message);
-        setError(error.message);
+        
       });
-  };
+  });
+  }
 
-  // Update Profile
-  const updateProfileUser = (user, name, photourl) => {
-    updateProfile(user, {
-      displayName: name,
-      photoURL: photourl,
-    })
-      .then(() => {
-        console.log("username & Photo updated");
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+// TODO : CONFIRM PASSWORD MATCH WITH PASSWORD
+
+  
 
   return (
     <div>
@@ -127,12 +108,18 @@ const Register = () => {
                 </label>
                 <input
                   type="password"
-                  {...register("password", { required: true, minLength: 6 })}
+                  {...register("password", {
+                     required: true,
+                     minLength: 6,
+                     pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                     })}
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
                 />
-                {errors.password?.type === 'required' && <span className="text-red-600">This field is required & give minimum 6 digit character</span>}
+                {errors.password?.type === 'required' && <span className="text-red-600">Password is required</span>}
+                {errors.password?.type === 'minLength' && <span className="text-red-600">Give minimum 6 digit character</span>}
+                {errors.password?.type === 'pattern' && <span className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</span>}
               </div>
 
               <div className="form-control">
@@ -141,12 +128,15 @@ const Register = () => {
                 </label>
                 <input
                   type="password"
-                  {...register("cPassword", { required: true, minLength: 6 })}
+                  {...register("cPassword", { 
+                    required: true
+                 })}
                   name="cPassword"
                   placeholder="Confirm Password"
                   className="input input-bordered"
                 />
-                {errors.cPassword && <span className="text-red-600">This field is required & give minimum 6 digit character</span>}
+                {errors.cPassword && <span className="text-red-600">This field is required</span>}
+                
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
@@ -156,12 +146,12 @@ const Register = () => {
               <div className="form-control mt-6">
                 <input
                   type="submit"
-                  value="Login"
-                  className="btn btn-primary"
+                  value="Register"
+                  className="btn btn-secondary"
                 />
               </div>
             </form>
-            
+            <p><small>Already have an account <Link to="/login">Login</Link></small></p>
           </div>
         </div>
       </div>

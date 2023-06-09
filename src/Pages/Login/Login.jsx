@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { signIn, googleProvider } = useContext(AuthContext);
@@ -26,6 +27,16 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        Swal.fire({
+            title: 'User Login Successfull',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }
+          });
+          
         setError("");
 
         navigate(from, { replace: true });
@@ -103,7 +114,7 @@ const Login = () => {
               onClick={handleGoogleSignIn}
               className="btn btn-outline btn-secondary"
             >
-              {" "}
+             
               <FaGoogle></FaGoogle> &nbsp;&nbsp;SignIn with Google
             </p>
 
