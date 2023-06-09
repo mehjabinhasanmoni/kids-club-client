@@ -4,7 +4,7 @@ const Slider = () => {
 
 
   return (
-    <div>
+    <div className="mt-5">
         <Carousel>
                 <div>
                     <img src="https://i.ibb.co/280ZsWf/slider-4.jpg" />
