@@ -1,13 +1,53 @@
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
+import { FaGoogle } from "react-icons/fa";
+
 const Login = () => {
+  const { signIn, googleProvider } = useContext(AuthContext);
+  const [error, setError] = useState("");
 
-    const handleLogin = event => {
-        event.preventDefault();
-        const form = event.target;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(email, password);
+  // Location Hooks
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    }
+  // Generating Url
+  const from = location.state?.from?.pathname || "/";
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    // Sign In User
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        setError("");
+
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setError(error.message);
+      });
+  };
+
+  // Google Sign In
+  const handleGoogleSignIn = async () => {
+    googleProvider()
+      .then((result) => {
+        const googleUser = result.user;
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log("Google sign in error", error);
+      });
+  };
+
   return (
     <div>
       <h2>Please Login!!</h2>
@@ -52,11 +92,27 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-6">
-               
-                <input type="submit" value="Login" className="btn btn-primary"/>
+                <input
+                  type="submit"
+                  value="Login"
+                  className="btn btn-primary"
+                />
               </div>
-
             </form>
+            <p
+              onClick={handleGoogleSignIn}
+              className="btn btn-outline btn-secondary"
+            >
+              {" "}
+              <FaGoogle></FaGoogle> &nbsp;&nbsp;SignIn with Google
+            </p>
+
+            <p className="mt-5">
+              New an Account?
+              <Link to="/register" className="font-bold text-green-600">
+                Register
+              </Link>
+            </p>
           </div>
         </div>
       </div>
