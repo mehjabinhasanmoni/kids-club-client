@@ -52,7 +52,7 @@ const Login = () => {
     googleProvider()
       .then((result) => {
         const googleUser = result.user;
-        const saveUser = {name: googleUser.displayName, email: googleUser.email }
+        const saveUser = {name: googleUser.displayName, email: googleUser.email, role: 'student' }
         fetch('http://localhost:5000/users',{
           method : 'POST',
           headers: {
