@@ -65,7 +65,21 @@ const Register = () => {
     googleProvider()
       .then((result) => {
         const googleUser = result.user;
-        navigate('/', { replace: true });
+        const saveUser = {name: googleUser.displayName, email: googleUser.email }
+        fetch('http://localhost:5000/users',{
+          method : 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(saveUser)
+
+        })
+        .then(res => res.json())
+        .then(() => { 
+            navigate('/', { replace: true });
+        })
+
+        
       })
       .catch((error) => {
         console.log("Google sign in error", error);
