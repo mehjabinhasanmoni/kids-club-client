@@ -14,7 +14,9 @@ const NavBar = () => {
     const navOptions = <>
       <li><Link to="/">Home</Link></li>
         <li>
-        <a>Item 2</a>
+          <Link to ="/dashboard">
+            Dashboard
+          </Link>
         </li>
        
         {

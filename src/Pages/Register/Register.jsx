@@ -3,11 +3,12 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { FaGoogle } from "react-icons/fa";
 
 const Register = () => {
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, googleProvider } = useContext(AuthContext);
     const navigate = useNavigate();
 
 
@@ -23,16 +24,32 @@ const Register = () => {
 
         updateUserProfile(data.name, data.photo)
         .then(() => {
-            console.log('User Profile Updated');
-            reset();
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Registration SuccessFully Done',
-                showConfirmButton: false,
-                timer: 1500
-              });
-              navigate('/');
+          const saveUser = {name: data.name, email: data.email }
+          fetch('http://localhost:5000/users',{
+            method : 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(saveUser)
+
+          })
+          .then(res => res.json())
+          .then(data => {
+            if(data.insertedId){
+              reset();
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Registration SuccessFully Done',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                navigate('/');
+
+            }
+          })
+            
+          
         })  
         .catch((error) => {
         console.log(error.message);
@@ -43,23 +60,26 @@ const Register = () => {
 
 // TODO : CONFIRM PASSWORD MATCH WITH PASSWORD
 
-  
+  // Google Sign In
+  const handleGoogleSignIn = async () => {
+    googleProvider()
+      .then((result) => {
+        const googleUser = result.user;
+        navigate('/', { replace: true });
+      })
+      .catch((error) => {
+        console.log("Google sign in error", error);
+      });
+  };
 
   return (
     <div>
-      <h2>Please Register!!</h2>
+      
 
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-          </div>
-          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <div className="hero m-5">
+      
+          <div className="card w-2/4  shadow-2xl bg-base-100 p-10">
+            <h2 className="text-3xl text-center">Please Register!!</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -150,10 +170,19 @@ const Register = () => {
                   className="btn btn-secondary"
                 />
               </div>
+
+              <p
+              onClick={handleGoogleSignIn}
+              className="btn btn-outline btn-secondary"
+            >
+             
+              <FaGoogle></FaGoogle> &nbsp;SignIn with Google
+            </p>
+
             </form>
-            <p><small>Already have an account <Link to="/login">Login</Link></small></p>
+            <p><small>Already have an account <Link to="/login" className="font-bold text-green-600">Login</Link></small></p>
           </div>
-        </div>
+        
       </div>
     </div>
   );

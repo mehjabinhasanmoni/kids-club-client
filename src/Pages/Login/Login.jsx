@@ -63,17 +63,10 @@ const Login = () => {
     <div>
       <h2>Please Login!!</h2>
 
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-          </div>
-          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <div className="hero m-5">
+          
+          <div className="card w-1/2 shadow-2xl bg-base-100 p-10">
+          <h2 className="text-3xl text-center">Login!!</h2>
             <form onSubmit={handleLogin} className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -109,14 +102,16 @@ const Login = () => {
                   className="btn btn-primary"
                 />
               </div>
-            </form>
-            <p
+
+              <p
               onClick={handleGoogleSignIn}
               className="btn btn-outline btn-secondary"
             >
              
               <FaGoogle></FaGoogle> &nbsp;&nbsp;SignIn with Google
             </p>
+            </form>
+            
 
             <p className="mt-5">
               New an Account?
@@ -126,7 +121,7 @@ const Login = () => {
             </p>
           </div>
         </div>
-      </div>
+      
     </div>
   );
 };
