@@ -21,6 +21,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoutes from "./AdminRoutes";
 import InstructorRoutes from "./InstructorRoutes";
 import StudentRoutes from "./StudentRoutes";
+import Classes from "../Pages/Classes/Classes";
 
 
  export  const router = createBrowserRouter([
@@ -39,6 +40,11 @@ import StudentRoutes from "./StudentRoutes";
         {
             path:'/register',
             element:<Register></Register>
+        },
+        {
+            path:'/classes',
+            element:<Classes></Classes>
+        
         }
       ]
     },

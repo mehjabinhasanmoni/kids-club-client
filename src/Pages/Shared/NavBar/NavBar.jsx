@@ -13,11 +13,15 @@ const NavBar = () => {
 
     const navOptions = <>
       <li><Link to="/">Home</Link></li>
-        <li>
+      <li><Link to="/classes">Class</Link></li>
+
+     { 
+     user ? <><li>
           <Link to ="/dashboard">
             Dashboard
           </Link>
-        </li>
+        </li> </>: <></>
+        }
        
         {
             user ?  <>
