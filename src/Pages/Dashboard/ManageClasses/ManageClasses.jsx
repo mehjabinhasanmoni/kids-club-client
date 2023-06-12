@@ -14,7 +14,7 @@ const ManageClasses = () => {
   };
   const handleFeedback = async (id) => {
     console.log("ID and Message",id,feedbackMessage);
-    fetch(`http://localhost:5000/classes/feedback/${id}/${feedbackMessage}`, {
+    fetch(`https://kids-club-server-production.up.railway.app/classes/feedback/${id}/${feedbackMessage}`, {
       method: "PUT",
     })
     .then((res) => res.json())
@@ -39,7 +39,7 @@ const ManageClasses = () => {
   };
 
   const handleBtnApproved = (aClass) => {
-    fetch(`http://localhost:5000/classes/status/approved/${aClass._id}`, {
+    fetch(`https://kids-club-server-production.up.railway.app/classes/status/approved/${aClass._id}`, {
       method: "PUT",
     })
       .then((res) => res.json())
@@ -59,7 +59,7 @@ const ManageClasses = () => {
   };
 
   const handleBtnDeny = (aClass) => {
-    fetch(`http://localhost:5000/classes/status/deny/${aClass._id}`, {
+    fetch(`https://kids-club-server-production.up.railway.app/classes/status/deny/${aClass._id}`, {
       method: "PUT",
     })
       .then((res) => res.json())

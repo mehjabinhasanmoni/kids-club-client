@@ -16,7 +16,7 @@ const ManageUsers = () => {
   // handle Admin button
 
   const handleMakeAdmin = (user) => {
-    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+    fetch(`https://kids-club-server-production.up.railway.app/users/admin/${user._id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())
@@ -38,7 +38,7 @@ const ManageUsers = () => {
   // handle Instructor button
 
   const handleMakeInstructor = (user) => {
-    fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+    fetch(`https://kids-club-server-production.up.railway.app/users/instructor/${user._id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())

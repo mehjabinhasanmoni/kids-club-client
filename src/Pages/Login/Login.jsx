@@ -85,7 +85,7 @@ const Login = () => {
       .then((result) => {
         const googleUser = result.user;
         const saveUser = {name: googleUser.displayName, email: googleUser.email, role: 'student' }
-        fetch('http://localhost:5000/users',{
+        fetch('https://kids-club-server-production.up.railway.app/users',{
           method : 'POST',
           headers: {
             'content-type': 'application/json'

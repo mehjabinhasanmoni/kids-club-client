@@ -19,6 +19,8 @@ import InstructorHome from "../Pages/Dashboard/Home/InstructorHome";
 import StuduntHome from "../Pages/Dashboard/Home/StuduntHome";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoutes from "./AdminRoutes";
+import InstructorRoutes from "./InstructorRoutes";
+import StudentRoutes from "./StudentRoutes";
 
 
  export  const router = createBrowserRouter([
@@ -46,47 +48,47 @@ import AdminRoutes from "./AdminRoutes";
       children : [
         {
           path: 'manageclasses',
-          element: <ManageClasses></ManageClasses>
+          element: <AdminRoutes><ManageClasses></ManageClasses></AdminRoutes>
         },
         {
           path:'manageusers',
-          element:<ManageUsers></ManageUsers>
+          element:<AdminRoutes><ManageUsers></ManageUsers></AdminRoutes>
         },
         {
           path: 'addclass',
-          element: <AddClass></AddClass>
+          element: <InstructorRoutes><AddClass></AddClass></InstructorRoutes>
         },
         {
           path:'myclass',
-          element:<MyClass></MyClass>
+          element:<InstructorRoutes><MyClass></MyClass></InstructorRoutes>
         },
         {
           path: 'seletedclass',
-          element: <SelectedClass></SelectedClass>
+          element: <StudentRoutes><SelectedClass></SelectedClass></StudentRoutes>
         },
         {
           path:'enrolledclass',
-          element:<EnrolledClass></EnrolledClass>
+          element:<StudentRoutes><EnrolledClass></EnrolledClass></StudentRoutes>
         },
         {
           path: 'payment',
-          element: <Payment></Payment>
+          element: <StudentRoutes><Payment></Payment></StudentRoutes>
         },
         {
           path:'myclass',
-          element:<PaymentHistory></PaymentHistory>
+          element:<StudentRoutes><PaymentHistory></PaymentHistory></StudentRoutes>
         },
         {
           path:'adminhome',
-          element:<AdminHome></AdminHome>
+          element:<AdminRoutes><AdminHome></AdminHome></AdminRoutes>
         },
         {
           path:'instructorhome',
-          element:<InstructorHome></InstructorHome>
+          element:<InstructorRoutes><InstructorHome></InstructorHome></InstructorRoutes>
         },
         {
           path:'studenthome',
-          element:<StuduntHome></StuduntHome>
+          element:<StudentRoutes><StuduntHome></StuduntHome></StudentRoutes>
         },
        
        
