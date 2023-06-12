@@ -12,6 +12,8 @@ const Register = () => {
     const navigate = useNavigate();
 
 
+
+
   const onSubmit = data => {
     console.log(data);
 
@@ -142,7 +144,7 @@ const Register = () => {
                 </label>
                 <input
                   type="password"
-                  {...register("password", {
+                   {...register("password", {
                      required: true,
                      minLength: 6,
                      pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
@@ -169,7 +171,7 @@ const Register = () => {
                   placeholder="Confirm Password"
                   className="input input-bordered"
                 />
-                {errors.cPassword && <span className="text-red-600">This field is required</span>}
+                {errors.cPassword && <span className="text-red-600">Confirm Password is required</span>}
                 
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">

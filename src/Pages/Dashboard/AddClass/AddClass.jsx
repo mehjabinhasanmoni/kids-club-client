@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 console.log(img_hosting_token);
 
 const AddClass = () => {
-    const { handleSubmit, register, formState: { errors } } = useForm();
+  const { user } = useAuth();
+    const [axiosSecure] = useAxiosSecure();
+    const { handleSubmit, register, reset, formState: { errors } } = useForm();
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`
     const onSubmit = data => {
         console.log(data)
@@ -19,28 +24,28 @@ const AddClass = () => {
         })
         .then(res => res.json())
 
-        // TODO : DATA ENTRY IN CLASS
+
 
         .then(imgResponse => {
             if(imgResponse.success){
                 const photoURL = imgResponse.data.display_url;
-                const { classname,insname, email, availseats, price} = data;
-                const newItem = {classname, insname, email, availseats,  price: parseFloat(price), photo:photoURL}
+                const { classname,insname, email, availseats, price, classstatus, totalenrolledstudents, feedback} = data;
+                const newItem = {classname, insname, email, availseats,  price: parseFloat(price), classstatus, totalenrolledstudents:parseFloat(totalenrolledstudents), feedback, photo:photoURL}
                 console.log(newItem)
-                // axiosSecure.post('/menu', newItem)
-                // .then(data => {
-                //     console.log('after posting new menu item', data.data)
-                //     if(data.data.insertedId){
-                //         reset();
-                //         Swal.fire({
-                //             position: 'top-end',
-                //             icon: 'success',
-                //             title: 'Item added successfully',
-                //             showConfirmButton: false,
-                //             timer: 1500
-                //           })
-                //     }
-                // })
+                axiosSecure.post('/classes', newItem)
+                .then(data => {
+                    console.log('after posting new class', data.data)
+                    if(data.data.insertedId){
+                        reset();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Class added successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                    }
+                })
             }
         })
 
@@ -94,12 +99,14 @@ const AddClass = () => {
                 <input
                   type="text"
                   name="insname"
+                  defaultValue={user?.displayName}
                   {...register("insname", {
                     required : true
                   })}
                 
                   placeholder="Instructor Name"
                   className="input input-bordered"
+                  readOnly
                 />
             {errors.insname && <span className="text-red-600">Instructor Name is required</span>}
 
@@ -111,11 +118,13 @@ const AddClass = () => {
                 <input
                   type="email"
                   name="email"
+                  defaultValue={user?.email}
                   {...register("email", {
                     required : true
                   })}
                   placeholder="Instructor Email"
                   className="input input-bordered"
+                  readOnly
                 />
             {errors.email && <span className="text-red-600">Instructor Email is required</span>}
 
@@ -153,6 +162,36 @@ const AddClass = () => {
                   className="input input-bordered"
                 />
                  {errors.price && <span className="text-red-600">Price is required</span>}
+              </div>
+              <div className="form-control">
+                <input
+                  type="hidden"
+                  name="classstatus"
+                  defaultValue="pending" 
+                  {...register("classstatus")}
+                  
+                />
+                 
+              </div>
+              <div className="form-control">
+                <input
+                  type="hidden"
+                  name="totalenrolledstudents"
+                  defaultValue="0" 
+                  {...register("totalenrolledstudents")}
+                  
+                />
+                
+              </div>
+              <div className="form-control">
+                <input
+                  type="hidden"
+                  name="feedback"
+                  defaultValue=" " 
+                  {...register("totalenrolledstudents")}
+                  
+                />
+                
               </div>
             </div>
 

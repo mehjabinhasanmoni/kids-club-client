@@ -18,6 +18,7 @@ import AdminHome from "../Pages/Dashboard/Home/AdminHome";
 import InstructorHome from "../Pages/Dashboard/Home/InstructorHome";
 import StuduntHome from "../Pages/Dashboard/Home/StuduntHome";
 import PrivateRoute from "./PrivateRoute";
+import AdminRoutes from "./AdminRoutes";
 
 
  export  const router = createBrowserRouter([
