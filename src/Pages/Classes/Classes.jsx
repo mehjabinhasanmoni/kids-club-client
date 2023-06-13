@@ -1,21 +1,18 @@
 import Swal from "sweetalert2";
 import useApprovedClasses from "../../hooks/useApprovedClasses";
 import useAuth from "../../hooks/useAuth";
-import useStudent from "../../hooks/useStudent";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Classes = () => {
   const [approvedclasses] = useApprovedClasses();
   console.log("approved Classes", approvedclasses);
-    // const [isStudent] = useStudent();
-//   const [isStudent, isStudentLoading] = useStudent();
   const { user  } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [role, setRole] = useState('');
 
-//   console.log("isStudent isStudent",isStudent);
+// get user info from localstroage
 
 useEffect(() => {
   const userInfoString = localStorage.getItem('userInfo');
@@ -26,7 +23,8 @@ useEffect(() => {
   }
 }, []);
 
-console.log('User Role is: ', role);
+// console.log('User Role is: ', role);
+
 
   const handleAddClass = (aClass) => {
     console.log("approved Classes in handle", aClass);
@@ -67,7 +65,7 @@ console.log('User Role is: ', role);
         });
     } else {
       Swal.fire({
-        title: "Please login to order this Class",
+        title: "Please login to select this Class",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
