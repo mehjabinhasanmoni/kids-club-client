@@ -19,7 +19,7 @@ const AuthProvider = ({children}) => {
 
     // Sign In
     const signIn = (email, password) =>{
-        setLoading(true);
+        setLoading(true);  
         return signInWithEmailAndPassword(auth, email, password)
     }
 
@@ -41,12 +41,15 @@ const AuthProvider = ({children}) => {
                 axios.post('https://kids-club-server-production.up.railway.app/jwt', {email: currentUser.email})
                 .then(data =>{
                     console.log(data.data.token)
-                    localStorage.setItem('access-token', data.data.token)
+                    localStorage.setItem('access-token', data?.data?.token)
+                    //  localStorage.setItem('role', 'student/admin/instructor')
+                    localStorage.setItem('userInfo', JSON.stringify(data?.data?.userInfo))
                     setLoading(false);
                 })
             }
             else{
                 localStorage.removeItem('access-token')
+                localStorage.removeItem('userInfo')
             }
 
          });

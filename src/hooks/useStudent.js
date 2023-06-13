@@ -5,7 +5,7 @@ import useAxiosSecure from "./useAxiosSecure";
 const useStudent = () => {
     const {user} = useAuth();
     const [axiosSecure] = useAxiosSecure();
-    
+    console.log("Usestudent called");
     const {data: isStudent, isLoading: isStudentLoading} = useQuery({
         queryKey: ['isStudent', user?.email],
         queryFn: async () => {
@@ -14,6 +14,8 @@ const useStudent = () => {
             return res.data.student;
         }
     })
+    
+   
     return [isStudent, isStudentLoading]
 }
 export default useStudent;

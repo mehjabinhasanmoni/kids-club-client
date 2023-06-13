@@ -3,18 +3,34 @@ import useApprovedClasses from "../../hooks/useApprovedClasses";
 import useAuth from "../../hooks/useAuth";
 import useStudent from "../../hooks/useStudent";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Classes = () => {
   const [approvedclasses] = useApprovedClasses();
   console.log("approved Classes", approvedclasses);
-  //   const [isStudent] = useStudent();
-  const { user } = useAuth();
+    // const [isStudent] = useStudent();
+//   const [isStudent, isStudentLoading] = useStudent();
+  const { user  } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [role, setRole] = useState('');
+
+//   console.log("isStudent isStudent",isStudent);
+
+useEffect(() => {
+  const userInfoString = localStorage.getItem('userInfo');
+  const userInfo = JSON.parse(userInfoString);
+  
+  if (userInfo && userInfo.role) {
+    setRole(userInfo.role);
+  }
+}, []);
+
+console.log('User Role is: ', role);
 
   const handleAddClass = (aClass) => {
     console.log("approved Classes in handle", aClass);
-    if (user) {
+    if (user && role=='student') {
       const selectClass = {
         selectedClassId: aClass._id,
         classname: aClass.classname,
@@ -22,7 +38,7 @@ const Classes = () => {
         insname: aClass.insname,
         price: aClass.price,
         availseats: aClass.availseats,
-        enrollment: parseFloat(0),
+        status: 'pending',
         email: user.email,
       };
       fetch(
@@ -82,15 +98,17 @@ const Classes = () => {
               <p>{aClass.insname}</p>
               <p>Available Seats : {aClass.availseats}</p>
               <p>Price : {aClass.price}</p>
-
-              <div className="card-actions">
+           
+             { (role=='' || role=='student')  ? <div className="card-actions">
                 <button
                   onClick={() => handleAddClass(aClass)}
                   className="btn btn-secondary"
                 >
                   Select Class
                 </button>
-              </div>
+              </div> : <> </>
+              }
+      
             </div>
           </div>
         );

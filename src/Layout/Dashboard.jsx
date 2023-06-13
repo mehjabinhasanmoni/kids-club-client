@@ -63,7 +63,7 @@ const Dashboard = () => {
                 <NavLink to="studenthome">Student Home</NavLink>
               </li>
               <li>
-                <NavLink to="selectedclass">Selected Classes</NavLink>
+                <NavLink to="seletedclass">Selected Classes</NavLink>
               </li>
               <li>
                 <NavLink to="enrolledclass">Enrolled Classes</NavLink>

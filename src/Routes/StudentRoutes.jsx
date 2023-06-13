@@ -6,7 +6,7 @@ const StudentRoutes = ({children}) => {
     const { user , loading} = useAuth();
     const location = useLocation();
     const [isStudent, isStudentLoading] = useStudent();
-
+    console.log("student route");
     if (loading || isStudentLoading  ) {
         return <progress className="progress w-56"></progress>
     }
