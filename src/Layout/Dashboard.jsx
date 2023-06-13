@@ -69,9 +69,6 @@ const Dashboard = () => {
                 <NavLink to="enrolledclass">Enrolled Classes</NavLink>
               </li>
               <li>
-                <NavLink to="payment">Payment</NavLink>
-              </li>
-              <li>
                 <NavLink to="paymenthistory">Payment History</NavLink>
               </li>
             </>

@@ -1,9 +1,12 @@
 import Swal from "sweetalert2";
 import useAllSelectedClass from "../../../hooks/useAllSelectedClass";
 import { FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const SelectedClass = () => {
     const [selectedclases, refetch] = useAllSelectedClass();
+   
 
     const handleBtnDelete = aClass => {
       Swal.fire({
@@ -32,6 +35,12 @@ const SelectedClass = () => {
                 })
         }
     })
+
+    }
+
+    const handleBtnPay = aClass => {
+      
+      console.log("for payment", aClass);
 
     }
 
@@ -76,14 +85,9 @@ const SelectedClass = () => {
                 <td>{aClass.availseats}</td>
                 <td>{aClass.price}</td>
                 <td>{aClass.classstatus}</td>
-                <td>
-                  <button
-                    onClick={() => handleBtnPay(aClass)}
-                    className="btn btn-ghost bg-lime-800  text-white"
-                  >
+                <td><Link to ={`/dashboard/payment/${aClass._id}`} className="btn btn-ghost bg-lime-800  text-white">
                     Pay
-                  </button>
-                  
+                  </Link>
                 </td>
                 <td>
                 <button
@@ -100,32 +104,6 @@ const SelectedClass = () => {
           </tbody>
         </table>
       </div>
-
-      {/* You can open the modal using ID.showModal() method */}
-      {/* <dialog id="my_modal_3" className="modal">
-        <form method="dialog" className="modal-box">
-          <button
-            htmlFor="my-modal-3"
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-          >
-            ✕
-          </button>
-          <h3 className="font-bold text-3xl text-center m-5">
-            Feedback for {clickedItem?.classname}
-          </h3>
-          <textarea
-            className="w-full "
-            cols={6}
-            rows={4}
-            placeholder="Write feedback"
-            value={feedbackMessage}
-            onChange={(e) => setFeedbackMessage(e.target.value)}
-          ></textarea>
-          <button onClick={() => handleFeedback(clickedItem._id)} className="btn btn-secondary">
-            Submit
-          </button>
-        </form>
-      </dialog> */}
     </>
     );
 };

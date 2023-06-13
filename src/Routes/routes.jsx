@@ -77,7 +77,7 @@ import Classes from "../Pages/Classes/Classes";
           element:<StudentRoutes><EnrolledClass></EnrolledClass></StudentRoutes>
         },
         {
-          path: 'payment',
+          path: 'payment/:id',
           element: <StudentRoutes><Payment></Payment></StudentRoutes>
         },
         {
