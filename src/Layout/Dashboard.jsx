@@ -1,6 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useInstructor from "../hooks/useInstructor";
+import { useContext } from "react";
+import { AuthContext } from "../Providers/AuthProvider";
 
 
 
@@ -11,6 +13,14 @@ const Dashboard = () => {
   const [isAdmin] = useAdmin();
   const [isInstructor] = useInstructor();
   console.log("Instructor check : ",isInstructor);
+  const {user, logOut} = useContext(AuthContext);
+   
+
+  const handleLogOut = () => {
+      logOut()
+      .then(() => {})
+      .catch(error => console.log(error))
+  }
 
 
   return (
@@ -44,6 +54,12 @@ const Dashboard = () => {
               <li>
                 <NavLink to="manageusers">Manage Users</NavLink>
               </li>
+              <li>
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li>
+              <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button>
+              </li>
             </>
           ) : isInstructor ? (
             <>
@@ -55,6 +71,12 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink to="myclass">My Classes</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li>
+              <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button>
               </li>
             </>
           ) : (
@@ -70,6 +92,12 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink to="paymentshistory">Payment History</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li>
+              <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button>
               </li>
             </>
           )}

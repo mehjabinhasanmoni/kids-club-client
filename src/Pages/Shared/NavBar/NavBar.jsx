@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import { FaUserCircle } from "react-icons/fa";
 
 
 const NavBar = () => {
@@ -25,7 +26,22 @@ const NavBar = () => {
         </li></>
         : <> </>
 } 
-
+{user?.photoURL ? (
+                      <div className="avatar my-2 mx-auto">
+                        <img
+                          src={user.photoURL}
+                          referrerPolicy="no-referrer"
+                          alt="User Avatar"
+                          style={{width:'32px'}}
+                        />
+                      </div>
+                    ) : (
+                      <div className="my-2 mx-auto">
+                        <FaUserCircle
+                          style={{ fontSize: "50px" }}
+                        ></FaUserCircle>
+                      </div>
+                    )}
         
        
         {

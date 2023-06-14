@@ -8,15 +8,15 @@ const Slider = () => {
         <Carousel>
                 <div>
                     <img src="https://i.ibb.co/280ZsWf/slider-4.jpg" />
-                    <p className="legend">Legend 1</p>
+                    <p className="legend">Art is Life</p>
                 </div>
                 <div>
                     <img src="https://i.ibb.co/cJCtjYp/slider-2.jpg" />
-                    <p className="legend">Legend 2</p>
+                    <p className="legend">Art is Life</p>
                 </div>
                 <div>
                     <img src="https://i.ibb.co/R33pcKX/slider-3.jpg" />
-                    <p className="legend">Legend 3</p>
+                    <p className="legend">Art is Life</p>
                 </div>
             </Carousel>
 
