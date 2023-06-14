@@ -81,8 +81,8 @@ import Classes from "../Pages/Classes/Classes";
           element: <StudentRoutes><Payment></Payment></StudentRoutes>
         },
         {
-          path:'myclass',
-          element:<StudentRoutes><PaymentHistory></PaymentHistory></StudentRoutes>
+          path: 'paymentshistory',
+          element: <StudentRoutes><PaymentHistory></PaymentHistory></StudentRoutes>
         },
         {
           path:'adminhome',
