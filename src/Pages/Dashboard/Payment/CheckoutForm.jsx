@@ -1,9 +1,12 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useState } from "react";
 
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ price }) => {
     const stripe = useStripe();
     const elements = useElements();
+    const [cardError, setCardError] = useState('');
+    const [processing, setProcessing] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -17,6 +20,35 @@ const CheckoutForm = () => {
         if (card === null) {
             return
         }
+
+        const { error } = await stripe.createPaymentMethod({
+            type: 'card',
+            card
+        })
+
+        if (error) {
+            console.log('error', error)
+            setCardError(error.message);
+        }
+        else {
+            setCardError('');
+            
+        }
+
+        setProcessing(true)
+
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        email: user?.email || 'unknown',
+                        name: user?.displayName || 'anonymous'
+                    },
+                },
+            },
+        );
 
 
 
@@ -42,10 +74,11 @@ const CheckoutForm = () => {
                         },
                     }}
                 />
-                <button className="btn btn-primary btn-sm mt-4" type="submit" disabled={!stripe || !clientSecret || processing}>
+                <button className="btn btn-primary btn-sm mt-4" type="submit" disabled={!stripe}>
                     Pay
                 </button>
             </form>
+            {cardError && <p className="text-red-600 ml-8">{cardError}</p>}
             
         </>
     );

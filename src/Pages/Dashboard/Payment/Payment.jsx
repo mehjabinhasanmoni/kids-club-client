@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import CheckoutForm from "./CheckoutForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
 const Payment = () => {
   const { id } = useParams();
   const [classInfo, setClassInfo] = useState({})
+  const price = parseFloat((classInfo.price).toFixed(2))
   fetch(
     `https://kids-club-server-production.up.railway.app/selectedclass/${id}`,
     {
@@ -25,6 +31,11 @@ const Payment = () => {
         <p>Class Name : {classInfo.classname}</p>
         <p>Amount : {classInfo.price}</p>
       </div>
+
+      <Elements stripe = {stripePromise}>
+            <CheckoutForm price={price}></CheckoutForm>
+      </Elements>
+      
 
     </>
   );
