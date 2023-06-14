@@ -8,21 +8,21 @@ const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
 const Payment = () => {
   const { id } = useParams();
-  const [classInfo, setClassInfo] = useState({})
-  const price = parseFloat((classInfo.price).toFixed(2))
+  const [classInfo, setClassInfo] = useState({});
+  // const price = classInfo?.price ? parseFloat(classInfo?.price) : 0;
+  const price = classInfo?.price;
   fetch(
     `https://kids-club-server-production.up.railway.app/selectedclass/${id}`,
     {
-      method: "GET",
-    }
-  )
-    .then((res) => {
-      //   console.log("actual response",res());
-      return res.json();
+        method : 'GET'
     })
+    .then((res) => res.json())
     .then((data) => {
         setClassInfo(data);
-    });
+    })
+    .catch(error =>{
+      console.log(error);
+    })
 
   return (
     <>
@@ -33,7 +33,7 @@ const Payment = () => {
       </div>
 
       <Elements stripe = {stripePromise}>
-            <CheckoutForm price={price}></CheckoutForm>
+            <CheckoutForm classInfo={classInfo} price={price}></CheckoutForm>
       </Elements>
       
 

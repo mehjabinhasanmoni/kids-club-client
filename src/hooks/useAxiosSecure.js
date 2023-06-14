@@ -3,14 +3,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
+const axiosSecure = axios.create({
+  baseURL: "https://kids-club-server-production.up.railway.app",
+});
+
+
 const useAxiosSecure = () => {
   const { logOut } = useAuth();
   const navigate = useNavigate();
 
-  const axiosSecure = axios.create({
-    baseURL: "https://kids-club-server-production.up.railway.app",
-  });
-
+  
   useEffect(() => {
     axiosSecure.interceptors.request.use((config) => {
       const token = localStorage.getItem("access-token");
