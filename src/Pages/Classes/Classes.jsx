@@ -83,7 +83,7 @@ useEffect(() => {
     <div className=" grid grid-cols-4 gap-10 my-10">
       {approvedclasses.map((aClass, index) => {
         return (
-          <div key={index} className="card w-96 bg-sky-200 shadow-xl">
+          <div key={index} className={`card w-96 ${parseInt(aClass.availseats)>0?'bg-sky-200':'bg-red-400'}  shadow-xl`}>
             <figure className="px-10 pt-10">
               <img
                 src={aClass.photo}
@@ -97,7 +97,7 @@ useEffect(() => {
               <p>Available Seats : {aClass.availseats}</p>
               <p>Price : {aClass.price}</p>
            
-             { (role=='' || role=='student')  ? <div className="card-actions">
+             { ((role=='' || role=='student') && parseInt(aClass.availseats)>0)  ? <div className="card-actions">
                 <button
                   onClick={() => handleAddClass(aClass)}
                   className="btn btn-secondary"

@@ -22,12 +22,14 @@ import AdminRoutes from "./AdminRoutes";
 import InstructorRoutes from "./InstructorRoutes";
 import StudentRoutes from "./StudentRoutes";
 import Classes from "../Pages/Classes/Classes";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 
  export  const router = createBrowserRouter([
     {
       path: "/",
       element: <Main></Main>,
+      errorElement:<ErrorPage></ErrorPage>,
       children: [
         {
             path:'/',
