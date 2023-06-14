@@ -3,13 +3,13 @@ import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useAllSelectedClass = () => {
-    const { loading } = useAuth();
+    const { user, loading } = useAuth();
     const [axiosSecure] = useAxiosSecure();
     const {refetch, data: selectedclases = []} = useQuery({
-        queryKey: ['selectedclases'],
+        queryKey: ['selectedclases', user?.email],
         enabled: !loading,
         queryFn: async() => {
-            const res = await axiosSecure('https://kids-club-server-production.up.railway.app/selectedclases')
+            const res = await axiosSecure(`https://kids-club-server-production.up.railway.app/selectedclases?email=${user?.email}`)
             return res.data;
         }
     })
